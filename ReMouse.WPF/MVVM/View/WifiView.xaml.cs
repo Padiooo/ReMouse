@@ -1,5 +1,4 @@
-﻿using ReMouse.WPF.Core.DataBinding;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,15 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ReMouse.WPF
+namespace ReMouse.WPF.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Logique d'interaction pour WifiView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class WifiView : UserControl
     {
-
-        public MainWindow()
+        public WifiView()
         {
             InitializeComponent();
         }

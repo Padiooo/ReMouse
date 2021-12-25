@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="ReMouse.WPF.MVVM.View.WifiView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMouse.WPF.MVVM.View"
+             xmlns:cc="clr-namespace:ReMouse.WPF.Assets.CustomControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="80" d:DesignWidth="300">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="80"/>
+        </Grid.ColumnDefinitions>
+
+        <cc:CustomButtonIconControl Grid.Column="1"
+                                    Color1="Gray"
+                                    Color2="Black"
+                                    Command="{Binding HomeCmd}"
+                                    ImageSource="/Assets/Images/home.png"/>
+
+    </Grid>
+</UserControl>

@@ -4,9 +4,48 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReMouse.WPF"
+        xmlns:extensions="clr-namespace:ReMouse.WPF.Core.DataBinding"
+        xmlns:viewModel="clr-namespace:ReMouse.WPF.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Height="100" 
+        Width="300"
+        WindowStyle="None"
+        Title="azea"
+        Background="Transparent"
+        AllowsTransparency="True">
 
-    </Grid>
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+
+    <Border>
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0, 0" 
+                                 EndPoint="1, 2">
+                <GradientStop Color="{Binding BackgroundGradient.Color1}" Offset="0"/>
+                <GradientStop Color="{Binding BackgroundGradient.Color2}" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <Border.Clip>
+            <RectangleGeometry RadiusX="10" RadiusY="10"
+                               Rect="0,0,300,100"/>
+        </Border.Clip>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="18"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <ContentControl Grid.Row="0"
+                            Content="{Binding WindowBarView}"
+                            />
+
+            <ContentControl Grid.Row="1"
+                            Margin="5"
+                            Content="{Binding MainView}"
+                            />
+        </Grid>
+    </Border>
 </Window>

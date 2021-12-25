@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="ReMouse.WPF.MVVM.View.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMouse.WPF.MVVM.View"
+             xmlns:viewModel="clr-namespace:ReMouse.WPF.MVVM.ViewModel"
+             xmlns:cc="clr-namespace:ReMouse.WPF.Assets.CustomControls"
+             mc:Ignorable="d">
+             
+
+    <StackPanel Orientation="Horizontal" 
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+
+        <cc:CustomButtonIconControl Color1="#0e99e6"
+                                    Color2="#0800ff"
+                                    Width="50"
+                                    Height="50"
+                                    Margin="0,0,10,0"
+                                    IsChecked="True"
+                                    Command="{Binding BluetoothCmd}"
+                                    ImageMargin="5"
+                                    ImageSource="/Assets/Images/bluetooth.png"/>
+        <cc:CustomButtonIconControl Color1="#c80bac"
+                                    Color2="#592277"
+                                    Width="50"
+                                    Height="50"
+                                    Command="{Binding WifiCmd}"
+                                    ImageSource="/Assets/Images/wifi.png"/>
+    </StackPanel>
+</UserControl>

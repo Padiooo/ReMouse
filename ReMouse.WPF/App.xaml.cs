@@ -1,8 +1,10 @@
-﻿using System;
+﻿using ReMouse.WPF.Core.CommandLine;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -13,5 +15,39 @@ namespace ReMouse.WPF
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// Read and process args given.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            if (new HelpArgument(e.Args).Found)
+            {
+                DisplayHelp(e.Args);
+                Current.Shutdown(0);
+            }
+
+            new MainWindow().Show();
+        }
+
+        private void DisplayHelp(string[] args)
+        {
+            Type t = typeof(CommandLineArgument);
+            IEnumerable<Type> types = t.Assembly.GetTypes().Where((type) => !type.IsAbstract && t.IsAssignableFrom(type));
+
+            _ = AttachConsole(-1);
+            Console.WriteLine();
+            foreach (var type in types)
+            {
+                string help = ((CommandLineArgument)Activator.CreateInstance(type, new object[] { args })).GetHelp();
+
+                _ = AttachConsole(-1);
+                Console.WriteLine("\t" + help);
+            }
+        }
+
+        [DllImport("Kernel32.dll")]
+        private static extern bool AttachConsole(int processId);
     }
 }

@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="ReMouse.WPF.MVVM.View.WindowBarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReMouse.WPF.MVVM.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="20" d:DesignWidth="200">
+    
+    <Border Background="#202234"
+                    MouseDown="WindowBar_MouseDown">
+        <StackPanel HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+
+            <Button Content="–"
+                    Padding="0,5,0,0"
+                    Style="{StaticResource WindowButton}"
+                    Click="MinimizeButton_Click"/>
+
+            <!--Button Content="◻"
+                    Style="{StaticResource WindowButton}"
+                    Click="ChangeWindowStateButton_Click"/-->
+
+            <Button Content="🞩"
+                    Style="{StaticResource WindowButton}"
+                    Click="CloseButton_Click"/>
+        </StackPanel>
+    </Border>
+</UserControl>
