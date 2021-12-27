@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReMouse.WPF.MVVM.View"
-             xmlns:cc="clr-namespace:ReMouse.WPF.Assets.CustomControls"
+             xmlns:cc="clr-namespace:ReMouse.WPF.Resources.CustomControls"
+             xmlns:constants="clr-namespace:ReMouse.WPF.Resources"
              mc:Ignorable="d" 
+             FontSize="13"
              d:DesignHeight="80" d:DesignWidth="300">
 
     <Grid>
@@ -17,7 +19,34 @@
         <cc:CustomButtonIconControl Color1="Gray"
                                     Color2="Black"
                                     Command="{Binding HomeCmd}"
-                                    ImageSource="/Assets/Images/home.png"/>
+                                    ImageSource="{Binding Source={x:Static constants:R+Images.Home}}"/>
+
+
+        <Grid Grid.Column="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <TextBlock VerticalAlignment="Center" 
+                       Text="Local name:"/>
+            <TextBlock VerticalAlignment="Center" 
+                       Grid.Row="1" Text="Remote name:"/>
+
+            <TextBlock Grid.Column="1" 
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Center"
+                       Text="{Binding Connectivity.LocalName}"/>
+            <TextBlock Grid.Column="1" Grid.Row="1"
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Center"
+                       Text="{Binding Connectivity.RemoteName}"/>
+
+        </Grid>
 
     </Grid>
 </UserControl>

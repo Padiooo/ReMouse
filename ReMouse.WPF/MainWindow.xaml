@@ -6,24 +6,27 @@
         xmlns:local="clr-namespace:ReMouse.WPF"
         xmlns:extensions="clr-namespace:ReMouse.WPF.Core.DataBinding"
         xmlns:viewModel="clr-namespace:ReMouse.WPF.MVVM.ViewModel"
+        xmlns:constants="clr-namespace:ReMouse.WPF.Resources"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
         mc:Ignorable="d"
         Height="100" 
         Width="300"
         WindowStyle="None"
         Title="azea"
         Background="Transparent"
-        AllowsTransparency="True">
-
-    <Window.DataContext>
-        <viewModel:MainViewModel/>
-    </Window.DataContext>
+        AllowsTransparency="True"
+        FontFamily="{Binding Source={x:Static constants:R+Fonts.Roboto}}">
 
     <Border>
         <Border.Background>
             <LinearGradientBrush StartPoint="0, 0" 
                                  EndPoint="1, 2">
-                <GradientStop Color="{Binding BackgroundGradient.Color1}" Offset="0"/>
-                <GradientStop Color="{Binding BackgroundGradient.Color2}" Offset="1"/>
+                <GradientStop x:Name="GradientStop1" 
+                              Color="{Binding Source={x:Static constants:R+Colors.Disconnected_Background_1}}" 
+                              Offset="0"/>
+                <GradientStop x:Name="GradientStop2" 
+                              Color="{Binding Source={x:Static constants:R+Colors.Disconnected_Background_2}}" 
+                              Offset="1"/>
             </LinearGradientBrush>
         </Border.Background>
 

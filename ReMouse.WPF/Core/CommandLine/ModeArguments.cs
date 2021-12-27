@@ -21,7 +21,6 @@ namespace ReMouse.WPF.Core.CommandLine
     {
         DEFAULT,
         MIN,
-        MAX,
         HIDDEN
     }
 

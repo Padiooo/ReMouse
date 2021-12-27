@@ -1,5 +1,4 @@
 ﻿using ReMouse.WPF.Core.DataBinding;
-using ReMouse.WPF.MVVM.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,10 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Animation;
+using ReMouse.WPF.Core.Sockets;
+using ReMouse.WPF.MVVM.Model;
+using ReMouse.WPF.Resources;
+using ReMouse.WPF.Core.Sockets.Clients;
+using ReMouse.WPF.Core.Packets;
+using ReMouse.WPF.Core.CommandLine;
+using System.Windows.Controls;
 
 namespace ReMouse.WPF.MVVM.ViewModel
 {
-    public class MainViewModel : ObservableObject
+    public class MainViewModel : ObservableObject, IArgumentHandler
     {
         public object WindowBarView { get; } = new WindowBarViewModel();
 
@@ -30,31 +36,90 @@ namespace ReMouse.WPF.MVVM.ViewModel
             }
         }
 
-        public GradientModel BackgroundGradient { get; }
-            = new GradientModel()
-            {
-                Color1 = (Color)ColorConverter.ConvertFromString("#2FA808"),
-                Color2 = (Color)ColorConverter.ConvertFromString("#081C01")
-            };
+        private readonly Action<Color, Color> _transition;
 
-        public MainViewModel()
+        private ListenerModel listenerModel;
+        private PacketProcessor processor;
+        private Color color1, color2;
+        private ConnectivityModel connectivityModel;
+
+        public MainViewModel(Action<Color, Color> transition, ContextMenu contextMenu)
         {
-            _homeVM = new HomeViewModel(new RelayCommand(BluetoothCmd), new RelayCommand(WifiCmd));
+            _transition = transition;
+            listenerModel = new ListenerModel();
+            listenerModel.OnClientConnect += ListenerModel_OnClientConnect;
+
+            RelayCommand bluetoothCmd = new RelayCommand(BluetoothCmd);
+            RelayCommand wifiCmd = new RelayCommand(WifiCmd);
+            _homeVM = new HomeViewModel(bluetoothCmd, wifiCmd);
+
+            contextMenu.Items.Cast<MenuItem>().FirstOrDefault(mi => mi.Header.ToString() == "Bluetooth").Command = bluetoothCmd;
+            contextMenu.Items.Cast<MenuItem>().FirstOrDefault(mi => mi.Header.ToString() == "Wifi").Command = wifiCmd;
+
             RelayCommand homeCmd = new(o => MainView = _homeVM);
-            _bluetoothVM = new BluetoothViewModel(homeCmd);
-            _wifiVM = new WifiViewModel(homeCmd);
+            connectivityModel = new ConnectivityModel();
+            _bluetoothVM = new BluetoothViewModel(homeCmd, connectivityModel);
+            _wifiVM = new WifiViewModel(homeCmd, connectivityModel);
 
             MainView = _homeVM;
+
+            processor = new PacketProcessor();
+        }
+
+        private void ListenerModel_OnClientConnect(object sender, IClient client)
+        {
+            _transition.Invoke(color1, color2);
+            connectivityModel.RemoteName = client.Name;
+            client.OnDataReceived += processor.ProcessData;
+            client.OnDisconnect += Client_OnDisconnect;
+        }
+
+        private void Client_OnDisconnect()
+        {
+            _transition.Invoke(R.Colors.Disconnected_Background_1, R.Colors.Disconnected_Background_2);
+            connectivityModel.RemoteName = "";
         }
 
         private void BluetoothCmd(object obj)
         {
             MainView = _bluetoothVM;
+            listenerModel.ConnectionType = ConnectionType.BLUETOOTH;
+            color1 = R.Colors.Bluetooth_1;
+            color2 = R.Colors.Bluetooth_2;
+
+            connectivityModel.LocalName = listenerModel.Name;
         }
 
         private void WifiCmd(object obj)
         {
             MainView = _wifiVM;
+            listenerModel.ConnectionType = ConnectionType.WIFI;
+            color1 = R.Colors.Wifi_1;
+            color2 = R.Colors.Wifi_2;
+
+            connectivityModel.LocalName = listenerModel.Name;
+        }
+
+        public void HandleArguments(string[] args)
+        {
+            ConnectionModeArgument connectionMode = new(args);
+            if (connectionMode.Found)
+            {
+                Action<object> action;
+                switch (connectionMode.Option)
+                {
+                    case ConnectionModeOption.BLUETOOTH:
+                        action = BluetoothCmd;
+                        break;
+                    case ConnectionModeOption.WIFI:
+                        action = WifiCmd;
+                        break;
+                    default:
+                        action = null;
+                        break;
+                }
+                action?.Invoke(null);
+            }
         }
     }
 }

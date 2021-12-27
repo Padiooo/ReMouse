@@ -1,30 +1,84 @@
-﻿using ReMouse.WPF.Core.DataBinding;
+﻿using Hardcodet.Wpf.TaskbarNotification;
+using ReMouse.WPF.Core.CommandLine;
+using ReMouse.WPF.Core.DataBinding;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Media.Animation;
+using System.Linq;
 
 namespace ReMouse.WPF
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IArgumentHandler
     {
+        private readonly ColorAnimation colorAnimation1 = new();
+        private readonly ColorAnimation colorAnimation2 = new();
+
+        private readonly TaskbarIcon icon;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            Closing += OnClosing;
+            icon = (TaskbarIcon)FindResource("TaskbarIcon");
+
+            icon.NoLeftClickDelay = true;
+            icon.LeftClickCommand = new RelayCommand(o =>
+            {
+                Show();
+                WindowState = WindowState.Normal;
+            });
+
+            colorAnimation1.Duration = TimeSpan.FromSeconds(0.3);
+            colorAnimation2.Duration = TimeSpan.FromSeconds(0.3);
+        }
+
+        private void OnClosing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
+            icon.Visibility = Visibility.Visible;
+        }
+
+        public void BackgroundTransition(Color color1, Color color2)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                colorAnimation1.To = color1;
+                colorAnimation2.To = color2;
+
+                GradientStop1.BeginAnimation(GradientStop.ColorProperty, colorAnimation1);
+                GradientStop2.BeginAnimation(GradientStop.ColorProperty, colorAnimation2);
+            });
+        }
+
+        public void HandleArguments(string[] args)
+        {
+            WindowModeArgument windowMode = new WindowModeArgument(args);
+
+            if (windowMode.Found)
+            {
+                switch (windowMode.Option)
+                {
+                    case WindowModeOption.DEFAULT:
+                        break;
+                    case WindowModeOption.MIN:
+                        Application.Current.MainWindow.WindowState = WindowState.Minimized;
+                        break;
+                    case WindowModeOption.HIDDEN:
+                        break;
+                    default:
+                        break;
+                }
+                Application.Current.MainWindow.Show();
+            }
+            else
+                Application.Current.MainWindow.Show();
         }
     }
 }

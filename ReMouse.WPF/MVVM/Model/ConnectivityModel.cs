@@ -4,30 +4,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media;
 
 namespace ReMouse.WPF.MVVM.Model
 {
-    public class GradientModel : ObservableObject
+    public class ConnectivityModel : ObservableObject
     {
-        private Color _color1;
-        public Color Color1
+        private string _localName;
+        public string LocalName
         {
-            get => _color1;
+            get { return _localName; }
             set
             {
-                _color1 = value;
+                _localName = value;
                 OnPropertyChanged();
             }
         }
 
-        private Color _color2;
-        public Color Color2
+        private string _remoteName;
+        public string RemoteName
         {
-            get => _color2;
+            get { return _remoteName; }
             set
             {
-                _color2 = value;
+                _remoteName = value;
                 OnPropertyChanged();
             }
         }

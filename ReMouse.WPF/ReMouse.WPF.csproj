@@ -7,24 +7,40 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\Images\bluetooth.png" />
-    <None Remove="Assets\Images\home.png" />
-    <None Remove="Assets\Images\wifi.png" />
+    <Content Remove="C:\Users\Clement\.nuget\packages\windowsinput\6.3.0\contentFiles\any\netcoreapp3.1\.nuget\mouse-keyboard-hook-logo.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\Fonts\" />
-    <Folder Include="Core\Exceptions\" />
+    <None Remove="Resources\Fonts\Roboto.ttf" />
+    <None Remove="Resources\Images\bluetooth.png" />
+    <None Remove="Resources\Images\home.png" />
+    <None Remove="Resources\Images\phone.ico" />
+    <None Remove="Resources\Images\wifi.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Images\bluetooth.png">
+    <PackageReference Include="32feet.NET" Version="3.5.0" />
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ReMouse.Shared\ReMouse.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Fonts\Roboto.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\Images\home.png">
+    <Resource Include="Resources\Images\bluetooth.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\Images\wifi.png">
+    <Resource Include="Resources\Images\home.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\phone.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\wifi.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

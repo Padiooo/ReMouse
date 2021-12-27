@@ -14,14 +14,14 @@ namespace ReMouse.WPF.Core.CommandLine
             : base(names)
         {
             int[] indexes = Exist(args);
-            Found = indexes[1] > 0;
+            Found = indexes[1] >= 0;
 
             if (Found)
             {
                 string option = args[indexes[1] + 1];
                 try
                 {
-                    Option = Enum.Parse<T>(option);
+                    Option = Enum.Parse<T>(option.ToUpper());
                 }
                 catch (Exception)
                 {

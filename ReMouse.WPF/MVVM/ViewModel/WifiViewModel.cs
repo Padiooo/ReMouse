@@ -1,4 +1,5 @@
 ﻿using ReMouse.WPF.Core.DataBinding;
+using ReMouse.WPF.MVVM.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,12 @@ namespace ReMouse.WPF.MVVM.ViewModel
     {
         public RelayCommand HomeCmd { get; }
 
-        public WifiViewModel(RelayCommand homeCmd)
+        public ConnectivityModel Connectivity { get; }
+
+        public WifiViewModel(RelayCommand homeCmd, ConnectivityModel connectivityModel)
         {
             HomeCmd = homeCmd;
+            Connectivity = connectivityModel;
         }
     }
 }

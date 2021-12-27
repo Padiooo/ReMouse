@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace ReMouse.WPF.Assets.CustomControls
+namespace ReMouse.WPF.Resources.CustomControls
 {
     public class CustomButtonIconControl : RadioButton
     {

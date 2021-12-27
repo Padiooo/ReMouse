@@ -23,7 +23,7 @@ namespace ReMouse.WPF.MVVM.View
 
         private void CloseButton_Click(object sender, EventArgs args)
         {
-            App.Current.Shutdown();
+            App.Current.MainWindow.Close();
         }
 
         private void ChangeWindowStateButton_Click(object sender, EventArgs args)

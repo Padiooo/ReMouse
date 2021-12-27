@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:ns="clr-namespace:ReMouse.WPF.Assets.CustomControls">
+                    xmlns:ns="clr-namespace:ReMouse.WPF.Resources.CustomControls">
 
     <ControlTemplate x:Key="CustomButtonIconControl_Template" TargetType="{x:Type ns:CustomButtonIconControl}">
         <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
@@ -14,7 +14,7 @@
                 </Border.Background>
             </Border>
 
-            <Image Margin="{TemplateBinding ImageMargin}" Source="{TemplateBinding ImageSource}" />
+            <Image Margin="{TemplateBinding ImageMargin}" Source="{TemplateBinding ImageSource}" RenderOptions.BitmapScalingMode="HighQuality" />
         </Grid>
     </ControlTemplate>
 

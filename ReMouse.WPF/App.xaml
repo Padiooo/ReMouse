@@ -4,14 +4,17 @@
              xmlns:viewModel="clr-namespace:ReMouse.WPF.MVVM.ViewModel"
              xmlns:view="clr-namespace:ReMouse.WPF.MVVM.View"
              xmlns:local="clr-namespace:ReMouse.WPF"
+             xmlns:constants="clr-namespace:ReMouse.WPF.Resources"
              Startup="Application_Startup"
              >
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Assets/Themes/WindowBarButtonTheme.xaml"/>
+                <ResourceDictionary Source="Resources/Themes/WindowBarButtonTheme.xaml"/>
+                <ResourceDictionary Source="Resources/Themes/TaskbarIconTheme.xaml" />
 
-                <ResourceDictionary Source="Assets/CustomControls/CustomButtonIconControl.xaml"/>
+
+                <ResourceDictionary Source="Resources/CustomControls/CustomButtonIconControl.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
 

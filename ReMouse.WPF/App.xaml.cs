@@ -1,4 +1,7 @@
-﻿using ReMouse.WPF.Core.CommandLine;
+﻿using Hardcodet.Wpf.TaskbarNotification;
+using ReMouse.WPF.Core.CommandLine;
+using ReMouse.WPF.Core.DataBinding;
+using ReMouse.WPF.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -28,7 +31,22 @@ namespace ReMouse.WPF
                 Current.Shutdown(0);
             }
 
-            new MainWindow().Show();
+            TaskbarIcon icon = (TaskbarIcon)FindResource("TaskbarIcon");
+
+            icon.ContextMenu.Items
+                .Cast<System.Windows.Controls.MenuItem>()
+                .FirstOrDefault(mi => mi.Header.ToString() == "Quit")
+                .Command = new RelayCommand(o =>
+                {
+                    Current.Shutdown();
+                });
+
+            MainWindow window = new MainWindow();
+            MainViewModel viewModel = new MainViewModel(window.BackgroundTransition, icon.ContextMenu);
+            window.DataContext = viewModel;
+
+            window.HandleArguments(e.Args);
+            viewModel.HandleArguments(e.Args);
         }
 
         private void DisplayHelp(string[] args)

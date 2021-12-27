@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReMouse.WPF.MVVM.View"
              xmlns:viewModel="clr-namespace:ReMouse.WPF.MVVM.ViewModel"
-             xmlns:cc="clr-namespace:ReMouse.WPF.Assets.CustomControls"
+             xmlns:cc="clr-namespace:ReMouse.WPF.Resources.CustomControls"
+             xmlns:constants="clr-namespace:ReMouse.WPF.Resources"
              mc:Ignorable="d">
              
 
@@ -13,20 +14,20 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
 
-        <cc:CustomButtonIconControl Color1="#0e99e6"
-                                    Color2="#0800ff"
+        <cc:CustomButtonIconControl Color1="{Binding Source={x:Static constants:R+Colors.Bluetooth_1}}"
+                                    Color2="{Binding Source={x:Static constants:R+Colors.Bluetooth_2}}"
                                     Width="50"
                                     Height="50"
                                     Margin="0,0,10,0"
                                     IsChecked="True"
                                     Command="{Binding BluetoothCmd}"
                                     ImageMargin="5"
-                                    ImageSource="/Assets/Images/bluetooth.png"/>
-        <cc:CustomButtonIconControl Color1="#c80bac"
-                                    Color2="#592277"
+                                    ImageSource="{Binding Source={x:Static constants:R+Images.Bluetooth}}"/>
+        <cc:CustomButtonIconControl Color1="{Binding Source={x:Static constants:R+Colors.Wifi_1}}"
+                                    Color2="{Binding Source={x:Static constants:R+Colors.Wifi_2}}"
                                     Width="50"
                                     Height="50"
                                     Command="{Binding WifiCmd}"
-                                    ImageSource="/Assets/Images/wifi.png"/>
+                                    ImageSource="{Binding Source={x:Static constants:R+Images.Wifi}}"/>
     </StackPanel>
 </UserControl>

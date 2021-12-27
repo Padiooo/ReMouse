@@ -1,0 +1,29 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:constants="clr-namespace:ReMouse.WPF.Resources"
+                    xmlns:tb="http://www.hardcodet.net/taskbar">
+
+    <tb:TaskbarIcon x:Key="TaskbarIcon"
+                    IconSource="{Binding Source={x:Static constants:R+Images.Icon}}"
+                    ToolTipText="ReMouse">
+
+        <tb:TaskbarIcon.Resources>
+            <Image x:Key="BluetoothImage" Source="{Binding Source={x:Static constants:R+Images.Bluetooth}}" RenderOptions.BitmapScalingMode="HighQuality" />
+            <Image x:Key="WifiImage" Source="{Binding Source={x:Static constants:R+Images.Wifi}}" RenderOptions.BitmapScalingMode="HighQuality" />
+        </tb:TaskbarIcon.Resources>
+
+
+        <tb:TaskbarIcon.ContextMenu>
+            <ContextMenu FontFamily="{Binding Source={x:Static constants:R+Fonts.Heebo}}">
+                <MenuItem Header="Bluetooth" 
+                          Icon="{StaticResource BluetoothImage}"/>
+                
+                <MenuItem Header="Wifi" 
+                          Icon="{StaticResource WifiImage}"/>
+
+                <MenuItem Header="Quit" />
+            </ContextMenu>
+        </tb:TaskbarIcon.ContextMenu>
+
+    </tb:TaskbarIcon>
+</ResourceDictionary>
