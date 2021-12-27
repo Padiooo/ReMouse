@@ -15,7 +15,7 @@
         Title="azea"
         Background="Transparent"
         AllowsTransparency="True"
-        FontFamily="{Binding Source={x:Static constants:R+Fonts.Roboto}}">
+        FontFamily="{Binding Source={x:Static constants:R+Fonts.Roboto}}" Icon="/Resources/Images/phone.ico">
 
     <Border>
         <Border.Background>

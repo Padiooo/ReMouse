@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Linq;
 
 namespace ReMouse.WPF
 {
@@ -66,16 +65,18 @@ namespace ReMouse.WPF
                 switch (windowMode.Option)
                 {
                     case WindowModeOption.DEFAULT:
+                        Application.Current.MainWindow.Show();
                         break;
                     case WindowModeOption.MIN:
                         Application.Current.MainWindow.WindowState = WindowState.Minimized;
+                        Application.Current.MainWindow.Show();
                         break;
                     case WindowModeOption.HIDDEN:
+                        Hide();
                         break;
                     default:
                         break;
                 }
-                Application.Current.MainWindow.Show();
             }
             else
                 Application.Current.MainWindow.Show();
