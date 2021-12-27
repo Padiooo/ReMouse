@@ -1,19 +1,13 @@
-﻿using ReMouse.WPF.Core.DataBinding;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Media;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Animation;
-using ReMouse.WPF.Core.Sockets;
+﻿using ReMouse.WPF.Core.CommandLine;
+using ReMouse.WPF.Core.DataBinding;
+using ReMouse.WPF.Core.Packets;
+using ReMouse.WPF.Core.Sockets.Clients;
 using ReMouse.WPF.MVVM.Model;
 using ReMouse.WPF.Resources;
-using ReMouse.WPF.Core.Sockets.Clients;
-using ReMouse.WPF.Core.Packets;
-using ReMouse.WPF.Core.CommandLine;
+using System;
+using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ReMouse.WPF.MVVM.ViewModel
 {

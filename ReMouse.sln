@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReMouse.WPF", "ReMouse.WPF\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remouse.Phone", "Remouse.Phone\Remouse.Phone.csproj", "{E1AA1652-5216-45FD-953C-25DB47E48BE2}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ReMouse.WPF.Setup", "ReMouse.WPF.Setup\ReMouse.WPF.Setup.vdproj", "{E5441DDC-D6EE-4016-8B28-A1B49F15DEB5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,8 @@ Global
 		{E1AA1652-5216-45FD-953C-25DB47E48BE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1AA1652-5216-45FD-953C-25DB47E48BE2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E1AA1652-5216-45FD-953C-25DB47E48BE2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E5441DDC-D6EE-4016-8B28-A1B49F15DEB5}.Debug|Any CPU.ActiveCfg = Debug
+		{E5441DDC-D6EE-4016-8B28-A1B49F15DEB5}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
