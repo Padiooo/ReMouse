@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ReMouse.Phone.MVVM.ViewModels"
+             xmlns:cv="clr-namespace:ReMouse.Phone.CustomViews"
+             x:Class="ReMouse.Phone.MVVM.Views.MainPage"
+             x:DataType="vm:MainPageViewModel"
+             Style="{StaticResource ContentPageStyle}"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.BindingContext>
+        <vm:MainPageViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+
+        <Grid VerticalOptions="CenterAndExpand" Margin="20,0,20,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <cv:ImageTextButton Grid.Row="0"
+                                Text="Mouse"
+                                ImageSource="mouse.png"
+                                Command="{Binding MouseCmd}" />
+
+            <cv:ImageTextButton Grid.Row="1"
+                                Text="Connection"
+                                ImageSource="link.png"
+                                Command="{Binding ConnectionCmd}" />
+
+            <cv:ImageTextButton Grid.Row="2"
+                                Text="Settings"
+                                ImageSource="settings.png"
+                                Command="{Binding SettingsCmd}" />
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

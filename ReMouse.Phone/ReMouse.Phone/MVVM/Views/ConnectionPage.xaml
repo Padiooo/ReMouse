@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ReMouse.Phone.MVVM.ViewModels" 
+             xmlns:cv="clr-namespace:ReMouse.Phone.CustomViews"
+             x:Class="ReMouse.Phone.MVVM.Views.ConnectionPage"
+             Style="{StaticResource ContentPageStyle}"
+             x:DataType="vm:ConnectionPageViewModel"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.BindingContext>
+        <vm:ConnectionPageViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="CenterAndExpand" Margin="30,0,0,30">
+
+            <cv:ImageTextButton Text="Bluetooth"
+                                ImageSource="bluetooth.png"
+                                Command="{Binding BluetoothCmd}" />
+
+            <cv:ImageTextButton Text="Wifi"
+                                ImageSource="wifi.png"
+                                Command="{Binding WifiCmd}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

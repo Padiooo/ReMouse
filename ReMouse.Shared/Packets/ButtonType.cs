@@ -31,16 +31,19 @@ namespace ReMouse.Shared.Packets
         [Description("Paste")]
         Paste,                          // CTRL + V
 
+        [Description("Mouse wheel click")]
         Middle_Click,                   // Mouse wheel click
+        [Description("Mouse wheel scroll down")]
         Middle_Down,                    // Mouse wheel scroll down
+        [Description("Mouse wheel scroll up")]
         Middle_Up,                      // Mouse wheel scroll up
 
         // Real ButtonBehaviour.DEFAULT
-        [Description("Sytem volum MUTE")]
+        [Description("Sytem volume mute")]
         System_Volume_Mute = 173,       // System volume mute
-        [Description("Sytem volum DOWN")]
+        [Description("Sytem volume down")]
         System_Volume_Down = 174,       // System volume down
-        [Description("Sytem volum UP")]
+        [Description("Sytem volume up")]
         System_Volume_Up = 175,         // System volume up
 
         [Description("Media player forward")]
@@ -55,8 +58,10 @@ namespace ReMouse.Shared.Packets
         Player_Control_Volume_Down = 40,// Media player control volume down
 
         // SPECIALS
+        [Description("Box")]
+        Box,
         [Description("Mouse move")]
-        MoveMouse = 42,                 // Move mouse toward direction sent
+        MoveMouse,                 // Move mouse toward direction sent
         [Description("Mouse left")]
         Left,                           // Mouse left button (click or hold)
         [Description("Mouse Right")]

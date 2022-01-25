@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ReMouse.Phone.MVVM.ViewModels" 
+             xmlns:vc="clr-namespace:ReMouse.Phone.Core.ValueConverters"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="ReMouse.Phone.MVVM.Views.MousePage"
+             x:DataType="vm:MousePageViewModel"
+             Style="{StaticResource ContentPageStyle}"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <vc:ReverseBooleanConverter x:Key="ReverseBooleanConverter"/>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+
+        <RelativeLayout x:Name="WorkingLayout">
+
+            <StackLayout x:Name="DisconnectLayout" 
+                         IsVisible="{Binding Socket.Connected, Converter={StaticResource ReverseBooleanConverter}}"
+                         VerticalOptions="CenterAndExpand" 
+                         HorizontalOptions="CenterAndExpand">
+
+                <Label x:Name="Label" Text="You are not connected." 
+                       HorizontalOptions="CenterAndExpand" 
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalTextAlignment="Center" />
+
+                <Button Text="Dismiss"
+                        Command="{Binding DismissCmd}" />
+
+
+            </StackLayout>
+
+        </RelativeLayout>
+
+    </ContentPage.Content>
+</ContentPage>

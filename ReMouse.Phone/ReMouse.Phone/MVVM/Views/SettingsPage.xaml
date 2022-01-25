@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:ReMouse.Phone.MVVM.ViewModels" 
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             BackgroundColor="{Binding SettingsModel.BackgroundColor}"
+             x:Class="ReMouse.Phone.MVVM.Views.SettingsPage"
+             x:DataType="vm:SettingsPageViewModel"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.BindingContext>
+        <vm:SettingsPageViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="HorizontalOptions" Value="Start"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="TextColor" Value="{Binding SettingsModel.ForegroundColor}"/>
+        </Style>
+        <Style TargetType="Entry">
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="TextColor" Value="{Binding SettingsModel.ForegroundColor}"/>
+        </Style>
+        <Style TargetType="Button">
+            <Style.Setters>
+                <Setter Property="TextColor" Value="{Binding SettingsModel.BackgroundColor}" />
+                <Setter Property="BackgroundColor" Value="{Binding SettingsModel.ForegroundColor}" />
+            </Style.Setters>
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+
+        <Grid Margin="20">
+            <StackLayout>
+                <StackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Text="Application theme:"/>
+
+                        <Picker Title="Themes" Grid.Column="1"
+                                ItemsSource="{Binding SettingsModel.ApplicationThemes}"
+                                SelectedItem="{Binding SettingsModel.ApplicationTheme}" 
+                                FontSize="22" VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="End"
+                                TextColor="{Binding SettingsModel.ForegroundColor}"/>
+
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Text="Mouse speed:"/>
+                        <Entry Text="15" Grid.Column="1" Keyboard="Numeric" />
+                    </Grid>
+
+                </StackLayout>
+
+                <StackLayout IsVisible="{Binding SettingsModel.IsCustom}">
+                    <StackLayout>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="Foreground color:" />
+                            <Entry Grid.Column="1" Text="{Binding SettingsModel.ForegroundHex, Mode=OneWay}"
+                                   Placeholder="Foreground">
+                                <Entry.Behaviors>
+                                    <xct:EventToCommandBehavior EventName="Unfocused" 
+                                                                Command="{Binding SettingsModel.ValidateColorHexCmd}" />
+                                </Entry.Behaviors>
+                            </Entry>
+                        </Grid>
+                        <Grid>
+                            <Rectangle BackgroundColor="Black" HeightRequest="50"/>
+                            <Rectangle BackgroundColor="{Binding SettingsModel.ForegroundColor}" HeightRequest="50" Margin="10"/>
+                        </Grid>
+                    </StackLayout>
+
+                    <StackLayout>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="Background color:" />
+                            <Entry Grid.Column="1" Text="{Binding SettingsModel.BackgroundHex, Mode=OneWay}"
+                                   Placeholder="Background">
+                                <Entry.Behaviors>
+                                    <xct:EventToCommandBehavior EventName="Unfocused" 
+                                                                Command="{Binding SettingsModel.ValidateColorHexCmd}"/>
+                                </Entry.Behaviors>
+                            </Entry>
+                        </Grid>
+                        <Grid>
+                            <Rectangle BackgroundColor="Black" HeightRequest="50"/>
+                            <Rectangle BackgroundColor="{Binding SettingsModel.BackgroundColor}" HeightRequest="50" Margin="10"/>
+                        </Grid>
+                    </StackLayout>
+                </StackLayout>
+                <Button Text="Reset" Command="{Binding ResetCmd}" />
+            </StackLayout>
+
+            <StackLayout VerticalOptions="EndAndExpand">
+                <Button Text="Buttons" Margin="0,10,0,0" Command="{Binding ButtonsCmd}"/>
+                <Button Text="Save" Command="{Binding SaveCmd}"/>
+            </StackLayout>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

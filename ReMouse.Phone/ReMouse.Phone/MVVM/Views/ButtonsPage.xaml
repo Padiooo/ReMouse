@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:vm="clr-namespace:ReMouse.Phone.MVVM.ViewModels" 
+             xmlns:models="clr-namespace:ReMouse.Phone.MVVM.Models"
+             xmlns:vc="clr-namespace:ReMouse.Phone.Core.ValueConverters" 
+             x:DataType="vm:ButtonsPageViewModel"
+             x:Class="ReMouse.Phone.MVVM.Views.ButtonsPage"
+             NavigationPage.HasNavigationBar="False"
+             Style="{StaticResource ContentPageStyle}">
+
+    <ContentPage.BindingContext>
+        <vm:ButtonsPageViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <vc:ReverseBooleanConverter x:Key="BooleanConverter"/>
+        
+        <Style TargetType="Label">
+            <Style.Setters>
+                <Setter Property="FontSize" Value="24" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="TextColor" Value="{Binding Source={StaticResource ColorApp}, Path=ForegroundColor}" />
+            </Style.Setters>
+        </Style>
+        <Style TargetType="Image">
+            <Setter Property="xct:IconTintColorEffect.TintColor" Value="{Binding Source={StaticResource ColorApp}, Path=ForegroundColor}" />
+            <Setter Property="WidthRequest" Value="50" />
+            <Setter Property="HeightRequest" Value="50" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout Margin="15">
+            <Label Text="Buttons settings" FontSize="44"
+                   HorizontalTextAlignment="Center"
+                   HorizontalOptions="Center"/>
+            <Grid Margin="0,10,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Text="Position"/>
+                <Image Source="draggable.png" WidthRequest="100" HeightRequest="100"
+                       Grid.Row="0" Grid.Column="1" 
+                       xct:TouchEffect.Command="{Binding PositionCmd}"/>
+
+                <Label Text="Properties" Grid.Row="1"/>
+                <Image Source="settings.png" WidthRequest="100" HeightRequest="100"
+                       Grid.Row="1" Grid.Column="1"
+                       xct:TouchEffect.Command="{Binding PropertiesCmd}"/>
+            </Grid>
+
+            <CollectionView ItemsSource="{Binding Buttons}"
+                            SelectedItem="{Binding SelectedItem}"
+                            SelectionMode="Single"
+                            Margin="20">
+
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="30"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:ButtonModel">
+                        <Grid>
+                            <Image Source="{Binding Data.ImageSource}" Margin="0,0,30,0"/>
+                            <Image Source="enabled.png" IsVisible="{Binding Data.IsEnabled}"
+                                   xct:IconTintColorEffect.TintColor="Green"
+                                   WidthRequest="20" HeightRequest="20" Margin="60,0,0,20"/>
+                            <Image Source="disabled.png" IsVisible="{Binding Data.IsEnabled, Converter={StaticResource BooleanConverter}}"
+                                   xct:IconTintColorEffect.TintColor="Red"
+                                   WidthRequest="20" HeightRequest="20" Margin="60,0,0,20"/>
+                            <Image Source="tick.png" 
+                                   xct:IconTintColorEffect.TintColor="Green" IsVisible="{Binding IsSelected}"
+                                   WidthRequest="20" HeightRequest="20" Margin="60,25,0,0"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace ReMouse.Shared.Packets
@@ -38,6 +39,32 @@ namespace ReMouse.Shared.Packets
             }
 
             return i;
+        }
+
+        public byte[] GetBytes()
+        {
+            byte[] result = new byte[sizeof(int) + sizeof(int)];
+
+            Array.Copy(BitConverter.GetBytes((int)ButtonType), result, sizeof(int));
+            Array.Copy(BitConverter.GetBytes((int)ButtonBehaviour), 0, result, sizeof(int), sizeof(int));
+
+            if (ButtonType == ButtonType.MoveMouse)
+            {
+                byte[] coord = new byte[sizeof(float) + sizeof(float)];
+                Array.Copy(BitConverter.GetBytes(X), 0, coord, 0, sizeof(float));
+                Array.Copy(BitConverter.GetBytes(Y), 0, coord, sizeof(float), sizeof(float));
+                result = result.Concat(coord).ToArray();
+            }
+            else if (ButtonType == ButtonType.Keyboard_Input)
+            {
+                if (TextInput != null && TextInput.Length != 0)
+                {
+                    byte[] text = Encoding.UTF8.GetBytes(TextInput);
+                    result = result.Concat(text).ToArray();
+                }
+            }
+
+            return result;
         }
 
         public void SetBytes(byte[] buffer, int offset, int length)

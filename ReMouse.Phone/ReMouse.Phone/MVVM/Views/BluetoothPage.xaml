@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:ReMouse.Phone.MVVM.ViewModels"
+             xmlns:vc="clr-namespace:ReMouse.Phone.Core.ValueConverters"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="ReMouse.Phone.MVVM.Views.BluetoothPage"
+             Style="{StaticResource ContentPageStyle}"
+             x:DataType="vm:BluetoothPageViewModel">
+
+    <ContentPage.BindingContext>
+        <vm:BluetoothPageViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <vc:ReverseBooleanConverter x:Key="BooleanConverter"/>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout Margin="10">
+
+            <Label Text="BLUETOOTH" 
+                   Margin="0,20,0,0"
+                   FontSize="46"
+                   VerticalOptions="StartAndExpand" 
+                   HorizontalOptions="Center" />
+
+            <StackLayout VerticalOptions="StartAndExpand" IsVisible="{Binding IsSupported, Converter={StaticResource BooleanConverter}}">
+                <Label Text="Bluetooth is not supported." 
+                       FontSize="32"
+                       VerticalOptions="CenterAndExpand" 
+                       HorizontalOptions="CenterAndExpand" />
+            </StackLayout>
+
+            <StackLayout VerticalOptions="StartAndExpand" 
+                         IsVisible="{Binding IsSupported}">
+
+                <Label Text="Please enable bluetooth." IsVisible="{Binding IsAvailable, Converter={StaticResource BooleanConverter}}"
+                       HorizontalTextAlignment="Center"
+                       FontSize="32"
+                       VerticalOptions="CenterAndExpand"/>
+
+                <StackLayout IsVisible="{Binding IsAvailable}">
+                    <Label Text="Select your device:" 
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand"
+                           FontSize="32"/>
+
+                    <Picker Title="Devices"
+                            ItemsSource="{Binding Devices}"
+                            SelectedIndex="{Binding SelectedIndex}"
+                            HorizontalTextAlignment="Center"/>
+
+                    <Button Text="CONNECT" 
+                            Command="{Binding ConnectCmd}"
+                            IsEnabled="{Binding ConnectEnabled}"
+                            FontSize="24"
+                            VerticalOptions="Center" />
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

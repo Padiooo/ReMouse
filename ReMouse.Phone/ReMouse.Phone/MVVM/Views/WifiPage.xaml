@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:ReMouse.Phone.MVVM.ViewModels" xmlns:vc="clr-namespace:ReMouse.Phone.Core.ValueConverters"
+             x:Class="ReMouse.Phone.MVVM.Views.WifiPage"
+             x:DataType="vm:WifiPageViewModel"
+             Style="{StaticResource ContentPageStyle}"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.BindingContext>
+        <vm:WifiPageViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <vc:ReverseBooleanConverter x:Key="BooleanConverter"/>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout Margin="10">
+
+            <Label Text="WIFI" 
+                   Margin="0,20,0,0"
+                   FontSize="46"
+                   VerticalOptions="StartAndExpand" 
+                   HorizontalOptions="Center" />
+
+            <StackLayout VerticalOptions="StartAndExpand" IsVisible="{Binding IsSupported, Converter={StaticResource BooleanConverter}}">
+                <Label Text="Wifi is not supported." 
+                       FontSize="32"
+                       VerticalOptions="CenterAndExpand" 
+                       HorizontalOptions="CenterAndExpand" />
+            </StackLayout>
+
+            <StackLayout VerticalOptions="StartAndExpand" IsVisible="{Binding IsAvailable, Converter={StaticResource BooleanConverter}}">
+                <Label Text="Please enable Wi-Fi."
+                       FontSize="32"
+                       VerticalOptions="CenterAndExpand" 
+                       HorizontalOptions="CenterAndExpand" />
+            </StackLayout>
+
+            <StackLayout VerticalOptions="StartAndExpand"
+                         IsVisible="{Binding IsAvailable}">
+
+                <Label Text="IP Address:" 
+                       VerticalTextAlignment="Center"
+                       HorizontalOptions="CenterAndExpand"
+                       FontSize="32"/>
+
+                <Entry Text="{Binding IpAddress}"
+                       Keyboard="Telephone"
+                       WidthRequest="5000"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center"
+                       HorizontalOptions="CenterAndExpand"
+                       FontSize="32" />
+
+                <Button Text="connect" 
+                        FontSize="24"
+                        Command="{Binding ConnectCmd}"
+                        IsEnabled="{Binding ConnectEnabled}"
+                        VerticalOptions="Center" />
+
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

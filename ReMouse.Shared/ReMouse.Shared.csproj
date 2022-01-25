@@ -52,6 +52,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Packets\ButtonBehaviour.cs" />
     <Compile Include="Packets\ButtonType.cs" />
+    <Compile Include="Packets\EnumExtensions.cs" />
     <Compile Include="Packets\Packet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

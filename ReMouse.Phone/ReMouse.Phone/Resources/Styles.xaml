@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                    x:Class="ReMouse.Phone.Resources.Styles">
+    
+    <Style TargetType="ContentPage" x:Key="ContentPageStyle">
+        <Style.Setters>
+            <Setter Property="BackgroundColor" Value="{Binding Source={StaticResource ColorApp}, Path=BackgroundColor}" />
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="Image">
+        <Style.Setters>
+            <Setter Property="xct:IconTintColorEffect.TintColor" Value="{Binding Source={StaticResource ColorApp}, Path=ForegroundColor}" />
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="Label">
+        <Style.Setters>
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="TextColor" Value="{Binding Source={StaticResource ColorApp}, Path=ForegroundColor}" />
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="Entry">
+        <Style.Setters>
+            <Setter Property="TextColor" Value="{Binding Source={StaticResource ColorApp}, Path=ForegroundColor}" />
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="Button">
+        <Style.Setters>
+            <Setter Property="TextColor" Value="{Binding Source={StaticResource ColorApp}, Path=BackgroundColor}" />
+            <Setter Property="BackgroundColor" Value="{Binding Source={StaticResource ColorApp}, Path=ForegroundColor}" />
+            <Setter Property="CornerRadius" Value="25" />
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="Picker">
+        <Style.Setters>
+            <Setter Property="TextColor" Value="{Binding Source={StaticResource ColorApp}, Path=ForegroundColor}" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="CheckBox">
+        <Style.Setters>
+            <Setter Property="Color" Value="{Binding Source={StaticResource ColorApp}, Path=BackgroundColor}" />
+            <Setter Property="BackgroundColor" Value="{Binding Source={StaticResource ColorApp}, Path=ForegroundColor}" />
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="Slider">
+        <Style.Setters>
+            <Setter Property="MinimumTrackColor" Value="{Binding Source={StaticResource ColorApp}, Path=ForegroundColor}" />
+            <Setter Property="MaximumTrackColor" Value="{Binding Source={StaticResource ColorApp}, Path=ForegroundColor}" />
+            <Setter Property="ThumbColor" Value="{Binding Source={StaticResource ColorApp}, Path=ForegroundColor}" />
+        </Style.Setters>
+    </Style>
+
+</ResourceDictionary>

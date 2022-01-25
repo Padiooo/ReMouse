@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:ReMouse.Phone.MVVM.ViewModels" 
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:vc="clr-namespace:ReMouse.Phone.Core.ValueConverters"
+             x:Class="ReMouse.Phone.MVVM.Views.PropertyPage"
+             x:DataType="vm:PropertyPageViewModel"
+             NavigationPage.HasNavigationBar="False"
+             Style="{StaticResource ContentPageStyle}">
+
+    <ContentPage.Resources>
+        <vc:ReverseBooleanConverter x:Key="BoolConverter"/>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="22" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout Margin="20">
+            <Label Text="{Binding Title}" 
+                   HorizontalOptions="Center" 
+                   FontSize="32"/>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Enable button"/>
+                <CheckBox IsChecked="{Binding Model.IsEnabled}" HorizontalOptions="EndAndExpand"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="In box ?" />
+                <Image Source="closed.pgn" WidthRequest="50" />
+                <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand">
+                    <CheckBox IsChecked="{Binding Model.IsInBox}" HeightRequest="35"/>
+                </StackLayout>
+            </StackLayout>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <Label Text="Color mode" />
+                
+                <StackLayout Grid.Column="1" Orientation="Horizontal">
+                    <Label Text="Custom" />
+                    <CheckBox IsChecked="{Binding Model.IsCustom}" HorizontalOptions="EndAndExpand" />
+                </StackLayout>
+                
+                <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <Label Text="App Theme" />
+                    <CheckBox IsChecked="{Binding Model.IsAppTheme}" HorizontalOptions="EndAndExpand" />
+                </StackLayout>
+            </Grid>
+
+            <StackLayout Orientation="Horizontal" IsVisible="{Binding Model.IsCustom}">
+                <Label Text="Color"/>
+                <Entry Text="{Binding Model.ColorHex, Mode=OneWay}" HorizontalOptions="EndAndExpand" WidthRequest="200"
+                       HorizontalTextAlignment="End">
+                    <Entry.Behaviors>
+                        <xct:EventToCommandBehavior EventName="Unfocused" 
+                                                    Command="{Binding Model.ValidateHexCmd}" />
+                    </Entry.Behaviors>
+                </Entry>
+            </StackLayout>
+            <Grid IsVisible="{Binding Model.IsCustom}">
+                <Rectangle BackgroundColor="Black" HeightRequest="50" />
+                <Rectangle BackgroundColor="{Binding Model.Color}" HeightRequest="50" Margin="10"/>
+            </Grid>
+
+            <Slider Value="{Binding Model.Progress}" Margin="0,20,0,0" />
+            <Image Source="{Binding Model.Data.ImageSource}" HorizontalOptions="Center"
+                   WidthRequest="{Binding Model.Data.Size}"/>
+
+            <Button Text="Save" Command="{Binding SaveCmd}" VerticalOptions="EndAndExpand"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
