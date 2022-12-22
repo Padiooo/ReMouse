@@ -4,7 +4,7 @@ using System;
 
 namespace ReMouse.WPF.MVVM.Model
 {
-    public enum ConnectionType { WIFI, BLUETOOTH }
+    public enum ConnectionType { NONE, WIFI, BLUETOOTH }
 
     public class ListenerModel : IListener
     {
@@ -29,9 +29,24 @@ namespace ReMouse.WPF.MVVM.Model
                     currentListener.OnClientConnect -= CurrentListener_OnClientConnect;
                 }
 
-                currentListener = value == ConnectionType.WIFI ? wifiListener.Value : bluetoothListener.Value;
-                currentListener.Start();
-                currentListener.OnClientConnect += CurrentListener_OnClientConnect;
+                switch (value)
+                {
+                    case ConnectionType.WIFI:
+                        currentListener = wifiListener.Value;
+                        break;
+                    case ConnectionType.BLUETOOTH:
+                        currentListener = bluetoothListener.Value;
+                        break;
+                    case ConnectionType.NONE:
+                    default:
+                        currentListener = null;
+                        break;
+                }
+                if (currentListener != null)
+                {
+                    currentListener.Start();
+                    currentListener.OnClientConnect += CurrentListener_OnClientConnect;
+                }
             }
         }
 

@@ -58,28 +58,36 @@ namespace ReMouse.WPF
 
         public void HandleArguments(string[] args)
         {
-            WindowModeArgument windowMode = new WindowModeArgument(args);
-
-            if (windowMode.Found)
+            try
             {
-                switch (windowMode.Option)
+                WindowModeArgument windowMode = new WindowModeArgument(args);
+
+                if (windowMode.Found)
                 {
-                    case WindowModeOption.DEFAULT:
-                        Application.Current.MainWindow.Show();
-                        break;
-                    case WindowModeOption.MIN:
-                        Application.Current.MainWindow.WindowState = WindowState.Minimized;
-                        Application.Current.MainWindow.Show();
-                        break;
-                    case WindowModeOption.HIDDEN:
-                        Hide();
-                        break;
-                    default:
-                        break;
+                    switch (windowMode.Option)
+                    {
+                        case WindowModeOption.DEFAULT:
+                            Application.Current.MainWindow.Show();
+                            break;
+                        case WindowModeOption.MIN:
+                            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+                            Application.Current.MainWindow.Show();
+                            break;
+                        case WindowModeOption.HIDDEN:
+                            Hide();
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                else
+                    Application.Current.MainWindow.Show();
             }
-            else
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error");
                 Application.Current.MainWindow.Show();
+            }
         }
     }
 }

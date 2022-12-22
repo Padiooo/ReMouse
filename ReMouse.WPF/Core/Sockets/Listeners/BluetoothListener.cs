@@ -13,14 +13,13 @@ namespace ReMouse.WPF.Core.Sockets.Listeners
 
         public BluetoothListener()
         {
-            CheckForRadio();
-
-            Name = BluetoothRadio.PrimaryRadio.Name;
         }
 
         protected override void StartListener()
         {
             CheckForRadio();
+            
+            Name = BluetoothRadio.PrimaryRadio.Name;
 
             listener = new InTheHand.Net.Sockets.BluetoothListener(Guid.Parse(Constants.BluetoothService));
             listener.Start();

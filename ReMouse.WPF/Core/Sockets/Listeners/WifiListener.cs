@@ -15,17 +15,24 @@ namespace ReMouse.WPF.Core.Sockets.Listeners
 
         public WifiListener()
         {
-            CheckEndPoint();
+
         }
 
         protected override void StartListener()
         {
-            listener = new TcpListener(CheckEndPoint());
+            var endpoint = GetEndpoint();
+
+            if (endpoint == null)
+                throw new WifiNotFoundException();
+
+            Name = endpoint.Address.ToString();
+
+            listener = new TcpListener(endpoint);
             listener.Start(1);
             listener.BeginAcceptSocket(AcceptAsync, null);
         }
 
-        private IPEndPoint CheckEndPoint()
+        private IPEndPoint GetEndpoint()
         {
             NetworkInterface[] netInterfaces = NetworkInterface.GetAllNetworkInterfaces()
                 .Where(netInterface => netInterface.NetworkInterfaceType != NetworkInterfaceType.Loopback).ToArray();
@@ -46,12 +53,11 @@ namespace ReMouse.WPF.Core.Sockets.Listeners
 
             var ip = networkInterface.GetIPProperties().UnicastAddresses
                     .Where(address => address.Address.AddressFamily == AddressFamily.InterNetwork).FirstOrDefault();
+
             if (ip == null)
-                throw new WifiNotFoundException();
+                return null;
 
-            Name = ip.Address.ToString();
             IPEndPoint endPoint = new(ip.Address, Constants.WifiPort);
-
 
             return endPoint;
         }

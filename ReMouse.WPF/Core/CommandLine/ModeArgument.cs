@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace ReMouse.WPF.Core.CommandLine
 {
@@ -21,7 +22,10 @@ namespace ReMouse.WPF.Core.CommandLine
                 }
                 catch (Exception)
                 {
-                    throw new Exception($"Invalid argument value for argument {names[indexes[0]]}.");
+                    string error = $"Invalid argument value ({args[indexes[1] + 1]}) for argument {names[indexes[0]]}.";
+                    var values = string.Join(", ", Enum.GetValues<T>().Select(v => v.ToString().ToLowerInvariant()));
+                    string tooltip = $"Expected: {values}.";
+                    throw new ArgumentException(string.Format("{0}\n{1}", error, tooltip));
                 }
             }
         }

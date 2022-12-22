@@ -1,11 +1,13 @@
 ﻿using ReMouse.WPF.Core.CommandLine;
 using ReMouse.WPF.Core.DataBinding;
+using ReMouse.WPF.Core.Exceptions;
 using ReMouse.WPF.Core.Packets;
 using ReMouse.WPF.Core.Sockets.Clients;
 using ReMouse.WPF.MVVM.Model;
 using ReMouse.WPF.Resources;
 using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -50,7 +52,7 @@ namespace ReMouse.WPF.MVVM.ViewModel
             contextMenu.Items.Cast<MenuItem>().FirstOrDefault(mi => mi.Header.ToString() == "Bluetooth").Command = bluetoothCmd;
             contextMenu.Items.Cast<MenuItem>().FirstOrDefault(mi => mi.Header.ToString() == "Wifi").Command = wifiCmd;
 
-            RelayCommand homeCmd = new(o => MainView = _homeVM);
+            RelayCommand homeCmd = new RelayCommand(HomeCmd);
             connectivityModel = new ConnectivityModel();
             _bluetoothVM = new BluetoothViewModel(homeCmd, connectivityModel);
             _wifiVM = new WifiViewModel(homeCmd, connectivityModel);
@@ -74,45 +76,73 @@ namespace ReMouse.WPF.MVVM.ViewModel
             connectivityModel.RemoteName = "";
         }
 
+        private void HomeCmd(object obj)
+        {
+            MainView = _homeVM;
+        }
+
         private void BluetoothCmd(object obj)
         {
-            MainView = _bluetoothVM;
-            listenerModel.ConnectionType = ConnectionType.BLUETOOTH;
-            color1 = R.Colors.Bluetooth_1;
-            color2 = R.Colors.Bluetooth_2;
+            try
+            {
+                MainView = _bluetoothVM;
+                listenerModel.ConnectionType = ConnectionType.BLUETOOTH;
+                color1 = R.Colors.Bluetooth_1;
+                color2 = R.Colors.Bluetooth_2;
 
-            connectivityModel.LocalName = listenerModel.Name;
+                connectivityModel.LocalName = listenerModel.Name;
+            }
+            catch (Exception e)
+            {
+                HomeCmd(null);
+                listenerModel.ConnectionType = ConnectionType.NONE;
+                MessageBox.Show(e.Message, "Error");
+            }
         }
 
         private void WifiCmd(object obj)
         {
-            MainView = _wifiVM;
-            listenerModel.ConnectionType = ConnectionType.WIFI;
-            color1 = R.Colors.Wifi_1;
-            color2 = R.Colors.Wifi_2;
+            try
+            {
+                MainView = _wifiVM;
+                listenerModel.ConnectionType = ConnectionType.WIFI;
+                color1 = R.Colors.Wifi_1;
+                color2 = R.Colors.Wifi_2;
 
-            connectivityModel.LocalName = listenerModel.Name;
+                connectivityModel.LocalName = listenerModel.Name;
+            }
+            catch (Exception e)
+            {
+                HomeCmd(null);
+                listenerModel.ConnectionType = ConnectionType.NONE;
+                MessageBox.Show(e.Message, "Error");
+            }
         }
 
         public void HandleArguments(string[] args)
         {
-            ConnectionModeArgument connectionMode = new(args);
-            if (connectionMode.Found)
+            try
             {
-                Action<object> action;
-                switch (connectionMode.Option)
+                ConnectionModeArgument connectionMode = new(args);
+                if (connectionMode.Found)
                 {
-                    case ConnectionModeOption.BLUETOOTH:
-                        action = BluetoothCmd;
-                        break;
-                    case ConnectionModeOption.WIFI:
-                        action = WifiCmd;
-                        break;
-                    default:
-                        action = null;
-                        break;
+                    switch (connectionMode.Option)
+                    {
+                        case ConnectionModeOption.BLUETOOTH:
+                            BluetoothCmd(null);
+                            break;
+                        case ConnectionModeOption.WIFI:
+                            WifiCmd(null);
+                            break;
+                        default:
+                            break;
+                    }
                 }
-                action?.Invoke(null);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error");
+                HomeCmd(null);
             }
         }
     }

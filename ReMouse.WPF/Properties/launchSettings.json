@@ -1,7 +1,8 @@
 {
   "profiles": {
     "ReMouse.WPF": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "-cm bluetooth"
     }
   }
 }
